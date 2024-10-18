@@ -15,7 +15,7 @@ To run this project, ensure you have Go installed. Download it from [the officia
 Clone the repository and navigate to the project directory.
 
 ```bas
-git clone https://learn.zone01oujda.ma/git/zkahlaou/ascii-art-output
+git clone https://github.com/AniMar0/ascii-web-oop.git
 ```
 ```bas
 cd ascii-art-output
