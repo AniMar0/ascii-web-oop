@@ -24,7 +24,7 @@ func (err Error) ErrGen(w http.ResponseWriter) {
 	case err.webError != nil:
 		err.RenderErrorPage(w, err.webError, 500)
 	case err.methodError != nil:
-		err.RenderErrorPage(w, err.webError, 500)
+		err.RenderErrorPage(w, err.methodError, 500)
 	}
 }
 

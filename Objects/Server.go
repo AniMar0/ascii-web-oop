@@ -54,8 +54,8 @@ func procceseHandler(writer http.ResponseWriter, request *http.Request) {
 	Input.ResitInput()
 	Err.ResitError()
 
-	temp, Err.webError = template.ParseFiles("templates/index.html")
 	if request.Method == http.MethodPost {
+		temp, Err.webError = template.ParseFiles("templates/index.html")
 		if Err.webError != nil {
 			Err.ErrGen(writer)
 			return
@@ -80,6 +80,7 @@ func procceseHandler(writer http.ResponseWriter, request *http.Request) {
 
 		temp.Execute(writer, stOutput)
 	} else {
+		fmt.Println("Method err")
 		Err.methodError = fmt.Errorf("request Err")
 		Err.ErrGen(writer)
 	}

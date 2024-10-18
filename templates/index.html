@@ -7,7 +7,7 @@
 </head>
 <body>
     <form action="/proccese" method="post">
-        <textarea style="width: fit-content;height: fit-content;" name="input" id="" required>{{ .AsciiOutput | html }}</textarea>
+        <textarea style="width: max-content;height: max-content;" name="input" id="" required>{{ .AsciiOutput | html }}</textarea>
         <button type="submit" name="banner" value="standard">standard</button>
         <button type="submit" name="banner" value="shadow">shadow</button>
         <button type="submit" name="banner" value="thinkertoy">thinkertoy</button>
