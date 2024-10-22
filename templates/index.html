@@ -7,10 +7,11 @@
 </head>
 <body>
     <form action="/proccese" method="post">
-        <textarea style="width: max-content;height: max-content;" name="input" id="" required>{{ .AsciiOutput | html }}</textarea>
-        <button type="submit" name="banner" value="standard">standard</button>
-        <button type="submit" name="banner" value="shadow">shadow</button>
-        <button type="submit" name="banner" value="thinkertoy">thinkertoy</button>
+        <textarea maxlength="200" style="width: 500px;height: 500px;" name="input" id="" required>{{.Old}}</textarea>
+        <button type="submit" style="display: inline;" name="banner" value="standard">standard</button>
+        <button type="submit" style="display: inline;" name="banner" value="shadow">shadow</button>
+        <button type="submit" style="display: inline;" name="banner" value="thinkertoy">thinkertoy</button>
+        <pre readonly style="overflow: auto;" name="input" id="" >{{ .AsciiOutput }}</pre>
     </form>
 </body>
 </html>

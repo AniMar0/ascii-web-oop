@@ -7,13 +7,17 @@ import (
 type Output struct {
 	AsciiOutput string
 	LastResult  []string
+	Old         string
 }
 
 // input is data type dyl zakaria */
 func (iout *Output) GenAll(Input Inputs) {
+	iout.AsciiOutput += "\n"
 	for i := 0; i < len(Input.DataGen); i++ {
 		if Input.DataGen[i] == "\n" {
-			iout.GenEachLine()
+			if iout.LastResult != nil {
+				iout.GenEachLine()
+			}
 			iout.AsciiOutput += "\n"
 			iout.LastResult = nil
 		} else {
@@ -31,7 +35,7 @@ func (iout *Output) GenEachLine() {
 	}
 }
 
-func (iout *Output) ResitOutput() {
+func (iout *Output) ResetOutput() {
 	iout.AsciiOutput = ""
 	iout.LastResult = nil
 }

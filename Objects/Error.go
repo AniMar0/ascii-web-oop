@@ -18,13 +18,18 @@ type Error struct {
 func (err Error) ErrGen(w http.ResponseWriter) {
 	switch {
 	case err.bannerError != nil:
-		err.RenderErrorPage(w, err.bannerError, 500)
+		if err.bannerError.Error() == "bad request" {
+			err.RenderErrorPage(w, err.bannerError, 400)
+		} else {
+			err.RenderErrorPage(w, err.bannerError, 500)
+		}
+
 	case err.inputError != nil:
 		err.RenderErrorPage(w, err.inputError, 500)
 	case err.webError != nil:
-		err.RenderErrorPage(w, err.webError, 500)
+		err.RenderErrorPage(w, fmt.Errorf("internal server error"), 500)
 	case err.methodError != nil:
-		err.RenderErrorPage(w, err.methodError, 500)
+		err.RenderErrorPage(w, fmt.Errorf("method not allowed"), 405)
 	}
 }
 

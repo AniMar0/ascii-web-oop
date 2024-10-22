@@ -1,6 +1,7 @@
 package ascii_web
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"text/template"
@@ -17,7 +18,6 @@ type Server struct{}
 var temp *template.Template
 
 func (ser Server) Run() {
-	fmt.Println("http://localhost:8080/")
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/proccese", procceseHandler)
 	http.HandleFunc("/error", errorHandler)
@@ -26,13 +26,17 @@ func (ser Server) Run() {
 
 func homeHandler(writer http.ResponseWriter, request *http.Request) {
 	Err.ResitError()
+	if request.URL.Path != "/" {
+		Err.RenderErrorPage(writer, fmt.Errorf("page not found"), 404)
+		return
+	}
 	if request.Method == http.MethodGet {
 		temp, Err.webError = template.ParseFiles("templates/index.html")
 		if Err.webError != nil {
 			Err.ErrGen(writer)
 			return
 		}
-		temp.Execute(writer, nil)
+		temp.Execute(writer, stOutput)
 	} else {
 		Err.methodError = fmt.Errorf("request Err")
 		Err.ErrGen(writer)
@@ -50,7 +54,7 @@ func errorHandler(writer http.ResponseWriter, request *http.Request) {
 }
 
 func procceseHandler(writer http.ResponseWriter, request *http.Request) {
-	stOutput.ResitOutput()
+	stOutput.ResetOutput()
 	Input.ResitInput()
 	Err.ResitError()
 
@@ -65,6 +69,11 @@ func procceseHandler(writer http.ResponseWriter, request *http.Request) {
 		Input.UsreText = request.FormValue("input")
 		Input.UserBanner = request.FormValue("banner")
 
+		if len(Input.UsreText) > 400 {
+			Err.RenderErrorPage(writer, errors.New("bad request"), 400)
+			return
+		}
+
 		Input.ReadFile()
 
 		if Err.bannerError != nil {
@@ -76,11 +85,10 @@ func procceseHandler(writer http.ResponseWriter, request *http.Request) {
 			Err.ErrGen(writer)
 			return
 		}
+		stOutput.Old = "\n" + Input.UsreText
 		stOutput.GenAll(Input)
-
 		temp.Execute(writer, stOutput)
 	} else {
-		fmt.Println("Method err")
 		Err.methodError = fmt.Errorf("request Err")
 		Err.ErrGen(writer)
 	}

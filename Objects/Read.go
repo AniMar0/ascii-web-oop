@@ -19,13 +19,13 @@ func (i *Inputs) ReadFile() {
 	i.rowDataFile, Err.bannerError = os.ReadFile("banners/" + i.UserBanner + ".txt")
 	if Err.bannerError != nil {
 		if os.IsNotExist(Err.bannerError) {
-			Err.bannerError = fmt.Errorf("the file %s doesn't exist", i.UserBanner)
+			Err.bannerError = fmt.Errorf("bad request")
 			return
 		}
 		return
 	} else if len(i.rowDataFile) != 6623 && i.UserBanner == "standard" || len(i.rowDataFile) != 7463 && i.UserBanner == "shadow" || len(i.rowDataFile) != 4703 && i.UserBanner == "thinkertoy" {
 		fmt.Println(len(i.rowDataFile))
-		Err.bannerError = fmt.Errorf("the file %s is empty or somebody have changed the data on purpose;", i.UserBanner)
+		Err.bannerError = fmt.Errorf("internal server error")
 		return
 	}
 
