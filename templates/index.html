@@ -1,17 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Ascii Art Generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <form action="/proccese" method="post">
-        <textarea maxlength="200" style="width: 500px;height: 500px;" name="input" id="" required>{{.Old}}</textarea>
-        <button type="submit" style="display: inline;" name="banner" value="standard">standard</button>
-        <button type="submit" style="display: inline;" name="banner" value="shadow">shadow</button>
-        <button type="submit" style="display: inline;" name="banner" value="thinkertoy">thinkertoy</button>
-        <pre readonly style="overflow: auto;" name="input" id="" >{{ .AsciiOutput }}</pre>
+    <!-- Form to submit user input text and banner style -->
+    <form action="/proccese#sec-2" method="post">
+        <section id="sec-1">
+            <div class="container">
+                <div class="h1-toggle-container">
+                    <h1>Ascii Art Generator</h1>
+                </div>
+
+                <!-- Input textarea and radio button section -->
+                <div class="textinput-radio-container">
+                    <textarea name="input" id="user-text" rows="6" maxlength="200" placeholder="Type your text here..." required>{{.Old}}</textarea>
+
+                    <div class="radio-section">
+                        <div class="radio-list">
+                            <div class="radio-item">
+                                <input type="radio" name="banner" id="radio1" value="standard" checked>
+                                <label for="radio1">Standard</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="banner" id="radio2" value="shadow">
+                                <label for="radio2">Shadow</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="banner" id="radio3" value="thinkertoy">
+                                <label for="radio3">Thinkertoy</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generate button -->
+                <div class="text-button-container">
+                    <h2>Your Result Will Be Shown Below</h2>
+                   
+                        <button type="submit" id="generate-button">Generate</button>
+                    
+                </div>
+
+                <!-- Scroll-down icon -->
+                <a href="#sec-2">
+                    <div class="scroll-down"></div>
+                </a>
+            </div>
+        </section>
     </form>
+
+    <!-- Output section for ASCII art and download button -->
+    <section id="sec-2">
+        <div class="container">
+            <h2>ASCII Art Output</h2>
+            <pre id="output-text" style="overflow: auto;" readonly>{{ .AsciiOutput }}</pre>
+
+            <!-- Form to download ASCII art -->
+            <form action="/download" method="POST">
+                <button type="submit" id="download-button">Download ASCII Art</button>
+            </form>
+
+            <!-- Scroll-up icon -->
+            <a href="#sec-1">
+                <div class="scroll-up"></div>
+            </a>
+        </div>
+    </section>
 </body>
+
 </html>

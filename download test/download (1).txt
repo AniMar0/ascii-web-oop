@@ -1,0 +1,40 @@
+
+                   _               _  
+                  | |             | | 
+  __ _   ___    __| |   __ _    __| | 
+ / _` | / __|  / _` |  / _` |  / _` | 
+| (_| | \__ \ | (_| | | (_| | | (_| | 
+ \__,_| |___/  \__,_|  \__,_|  \__,_| 
+                                      
+                                      
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/proccese" method="post">
+        <textarea maxlength="200" style="width: 500px;height: 500px;" name="input" id="" required>
+asdad</textarea>
+        <input type="radio" style="display: inline;" name="banner" value="standard">standard</input>
+        <input type="radio"  style="display: inline;" name="banner" value="shadow">shadow</input>
+        <input type="radio"  style="display: inline;" name="banner" value="thinkertoy">thinkertoy</input>
+        <button type="submit" style="display: inline;" name="gen" value="gen">gen</button>
+        <button type="submit" style="display: inline;" name="download" value="download">download</button>
+        <pre readonly style="overflow: auto;" name="input" id="" >
+                   _               _  
+                  | |             | | 
+  __ _   ___    __| |   __ _    __| | 
+ / _` | / __|  / _` |  / _` |  / _` | 
+| (_| | \__ \ | (_| | | (_| | | (_| | 
+ \__,_| |___/  \__,_|  \__,_|  \__,_| 
+                                      
+                                      
+
+</pre>
+    </form>
+</body>
+</html>
