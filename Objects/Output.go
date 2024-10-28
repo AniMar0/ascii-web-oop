@@ -57,6 +57,6 @@ func (iout *Output) Download(Writer http.ResponseWriter) {
 	Writer.Header().Set("Content-Type", "text/plain")
 	Writer.Header().Set("Content-Disposition", "attachment; filename=download.txt")
 	if _, err := Writer.Write([]byte(iout.AsciiOutput[1:])); err != nil {
-		http.Error(Writer, "Error download file to response: "+err.Error(), http.StatusInternalServerError)
+		Err.RenderErrorPage(Writer, err, http.StatusInternalServerError)
 	}
 }
