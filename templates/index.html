@@ -46,6 +46,7 @@
                     <h2>Your Result Will Be Shown Below</h2>
                    
                         <button type="submit" id="generate-button">Generate</button>
+                        <button type="submit" name="download" value="Download" id="download">Download</button>
                     
                 </div>
 
@@ -62,7 +63,7 @@
         <div class="container">
             <h2>ASCII Art Output</h2>
             <pre id="output-text" style="overflow: auto;" readonly required>{{ .AsciiOutput }}</pre>
-            
+
             <a href="#sec-1">
                 <div class="scroll-up"></div>
             </a>
