@@ -3,8 +3,6 @@ package ascii_web
 import (
 	"fmt"
 	"net/http"
-	"os"
-	"strings"
 	"text/template"
 )
 
@@ -23,39 +21,12 @@ var temp *template.Template
 // Run method starts the HTTP server and sets up routes
 func (ser Server) Run() {
 	// Set up a route for the each root URL  that calls the correspending method
-	http.HandleFunc("/", staticHandler)
+	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/proccese", procceseHandler)
-	http.HandleFunc("/download", downloadHandler)
 	http.HandleFunc("/error", errorHandler)
 	// Start the HTTP server on port 8080 and log any panic that occurs
 	// If the server encounters an error, it will panic and terminate the program
 	panic(http.ListenAndServe(":8080", nil))
-}
-
-func staticHandler(res http.ResponseWriter, req *http.Request) {
-	if req.URL.Path == "/" {
-		homeHandler(res, req)
-		return
-	}
-	path := "./templates/static/" + req.URL.Path
-
-	fileData, err := os.ReadFile(path)
-	if err != nil {
-		http.Error(res, "404 - page not found", 404)
-		return
-	}
-	fileName := strings.Split(path, ".")
-	ext := fileName[len(fileName)-1]
-	switch ext {
-	case "html":
-		res.Header().Set("Content-Type", "text/html")
-	case "css":
-		res.Header().Set("Content-Type", "text/css")
-	default:
-		res.Header().Set("Content-Type", "text/plain")
-	}
-
-	res.Write(fileData)
 }
 
 // homeHandler handles requests to the home page ("/")
@@ -116,6 +87,7 @@ func procceseHandler(writer http.ResponseWriter, request *http.Request) {
 		// Retrieve values from the form and assign them to Input fields
 		Input.UsreText = request.FormValue("input")
 		Input.UserBanner = request.FormValue("banner")
+		down := request.FormValue("download")
 		// Read a file based on the user input
 		Input.ReadFile()
 
@@ -135,20 +107,19 @@ func procceseHandler(writer http.ResponseWriter, request *http.Request) {
 		stOutput.Old = "\n" + Input.UsreText
 		// Generate the final output
 		stOutput.GenAll(Input)
+
+		if down != "" {
+			stOutput.Download(writer)
+			return
+		}
 		// Execute the parsed template and write the output to the response
 		temp.Execute(writer, stOutput)
+		stOutput.ResetOutput()
+		Input.ResetInput()
+		Err.ResetError()
 
 	} else {
 		// If the request method is not POST, generate an error
-		Err.methodError = fmt.Errorf("request Err")
-		Err.ErrGen(writer)
-	}
-}
-
-func downloadHandler(writer http.ResponseWriter, request *http.Request) {
-	if request.Method == http.MethodPost {
-		stOutput.Download(writer)
-	} else {
 		Err.methodError = fmt.Errorf("request Err")
 		Err.ErrGen(writer)
 	}

@@ -61,14 +61,8 @@
     <section id="sec-2">
         <div class="container">
             <h2>ASCII Art Output</h2>
-            <pre id="output-text" style="overflow: auto;" readonly>{{ .AsciiOutput }}</pre>
-
-            <!-- Form to download ASCII art -->
-            <form action="/download" method="POST">
-                <button type="submit" id="download-button">Download ASCII Art</button>
-            </form>
-
-            <!-- Scroll-up icon -->
+            <pre id="output-text" style="overflow: auto;" readonly required>{{ .AsciiOutput }}</pre>
+            
             <a href="#sec-1">
                 <div class="scroll-up"></div>
             </a>

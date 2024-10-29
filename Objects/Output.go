@@ -2,6 +2,7 @@ package ascii_web
 
 import (
 	"net/http"
+	"strconv"
 	"strings"
 )
 
@@ -56,7 +57,16 @@ func (iout *Output) ResetOutput() {
 func (iout *Output) Download(Writer http.ResponseWriter) {
 	Writer.Header().Set("Content-Type", "text/plain")
 	Writer.Header().Set("Content-Disposition", "attachment; filename=download.txt")
+	Writer.Header().Set("Content-Length", strconv.Itoa(len(iout.AsciiOutput[1:])))
+
 	if _, err := Writer.Write([]byte(iout.AsciiOutput[1:])); err != nil {
+		Err.RenderErrorPage(Writer, err, http.StatusInternalServerError)
+	}
+}
+
+func (iout *Output) Noting(Writer http.ResponseWriter) {
+	Writer.Header().Set("Content-Type", "text/plain")
+	if _, err := Writer.Write([]byte("Noting to download")); err != nil {
 		Err.RenderErrorPage(Writer, err, http.StatusInternalServerError)
 	}
 }
